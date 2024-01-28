@@ -1,17 +1,17 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Signup from "./components/Signup/Signup";
-import Signin from "./components/Signin/Signin";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import SignupPage, { action as signupAction } from "./pages/SignupPage";
+import SigninPage, { action as signinAction } from "./pages/SigninPage";
+import DashboardPage from "./pages/DashboardPage";
+
+const router = createBrowserRouter([
+  { path: "/", element: <SigninPage />, action: signinAction },
+  { path: "/signup", element: <SignupPage />, action: signupAction },
+  { path: "/dashboard", element: <DashboardPage /> },
+]);
+
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Dashboard />} />
-        <Route path="Signup" element={<Signup />} />
-        <Route path="Signin" element={<Signin />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

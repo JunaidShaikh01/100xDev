@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styles from "./Signin.module.css";
+import { Form, Link } from "react-router-dom";
 export default function Signin() {
-  function submitHandler(e) {}
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const changeHandler = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }, []);
+
   return (
     <div>
       <div className={styles.main}>
@@ -10,16 +22,32 @@ export default function Signin() {
             <h1>Sign In</h1>
             <p>Enter your Cradention for signin</p>
           </div>
-          <form onSubmit={submitHandler} className={styles.signinForm}>
+          <Form method="post" action="/" className={styles.signinForm}>
             <label htmlFor="email">E-mail</label>
-            <input type="mail" name="email" placeholder="johndeo@gmail.com" />
+            <input
+              required
+              type="mail"
+              name="username"
+              value={formData.username}
+              placeholder="johndeo@gmail.com"
+              onChange={changeHandler}
+            />
 
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" />
+            <input
+              required
+              type="password"
+              name="password"
+              onChange={changeHandler}
+              value={formData.password}
+              placeholder="Enter your name"
+            />
             <button className={styles.submitBtn}>Sign Up</button>
-          </form>
+          </Form>
 
-          <p className={styles.signinFooter}>Don't have an account?</p>
+          <p className={styles.signinFooter}>
+            Don't have an account? <Link to="/signup">signup</Link>
+          </p>
         </div>
       </div>
     </div>
