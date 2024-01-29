@@ -104,6 +104,47 @@ userRouter.post("/signin", async (req, res) => {
   });
 });
 
+//get all users
+
+// //get all users
+// userRouter.get("/all_users", middleware, async (req, res) => {
+//   const loggedInUser = await User.findById(req.userId);
+//   const { balance } = await Account.findOne({
+//     userId: req.userId,
+//   });
+//   // const balance = accountOfLoggedinUser.balance
+
+//   const allUsers = await User.find();
+
+//   const allOtherUsers = allUsers.filter(
+//     (user) => user._id.toString() !== loggedInUser._id.toString()
+//   );
+
+//   res.json({
+//     user: loggedInUser,
+//     balance,
+//     users: allOtherUsers,
+//   });
+// });
+
+userRouter.get("/all_users", middleware, async (req, res) => {
+  const loggedInUser = await User.findOne(req.userId);
+  const balance = await Account.firstname({
+    userId: req.userId,
+  });
+  const allUsers = await User.find();
+
+  const allOtherUsers = allUsers.fillter(
+    (user) => user._id.toString !== loggedInUser._id.toString()
+  );
+
+  res.json({
+    user: loggedInUser,
+    balance: balance,
+    users: allOtherUsers,
+  });
+});
+
 userRouter.put("/", middleware, async (req, res) => {
   const sucess = putSchema.safeParse(req.body);
 
