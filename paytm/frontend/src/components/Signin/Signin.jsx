@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from "react";
 import styles from "./Signin.module.css";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useActionData } from "react-router-dom";
 export default function Signin() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+  const actionData = useActionData();
+  console.log("Action Data", actionData);
   const changeHandler = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({

@@ -19,11 +19,11 @@ export const action = async ({ request }) => {
 
   try {
     const { data } = await axios.post(
-        "http://localhost:3000/api/v1/user/signin",
-        {
-            username: authData.username,
-            password: authData.password,
-        }
+      "http://localhost:3000/api/v1/user/signin",
+      {
+        username: authData.username,
+        password: authData.password,
+      }
     );
 
     console.log(data.token);
@@ -32,7 +32,8 @@ export const action = async ({ request }) => {
     localStorage.setItem("token", data.token);
 
     return redirect("/dashboard");
-} catch (error) {
+  } catch (error) {
+    console.log(error.response.data.message);
     return error.response.data.message;
   }
 };
