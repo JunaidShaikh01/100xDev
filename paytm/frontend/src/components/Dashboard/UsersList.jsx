@@ -5,7 +5,7 @@ export default function UsersList({ users }) {
   return (
     <ul className={styles.ul}>
       {users?.map((user, index) => (
-        <ListUser index={index} user={user.firstname} />
+        <ListUser index={index} username={user.firstname} allUser={user} />
       ))}
     </ul>
   );

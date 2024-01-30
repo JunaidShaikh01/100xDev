@@ -15,19 +15,19 @@ export default function DashboardPage() {
 export const loader = async () => {
   const token = localStorage.getItem("token");
   console.log(token);
-  // try {
-  const { data } = await axios.get(
-    "http://localhost:3000/api/v1/user/all_users",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  console.log("data:-", data);
-  return data;
-  // } catch (e) {
-  //   return e.response.data.message;
-  // }
+  try {
+    const { data } = await axios.get(
+      "http://localhost:3000/api/v1/user/all_users",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // console.log("data:-", data);
+    return data;
+  } catch (e) {
+    return e.response.data.message;
+  }
 };

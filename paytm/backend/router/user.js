@@ -164,8 +164,33 @@ userRouter.put("/", middleware, async (req, res) => {
     }
   );
   res.status(200).json({
-    msg: " uers updated",
+    msg: "Updated Successfuly",
   });
+});
+
+userRouter.get("/bulk", async (req, res) => {
+  try {
+    const filter = req.query.filter || "";
+    const users = await User.find({
+      $or: [
+        { firstname: { $regex: new RegExp(filter, "i") } },
+        { lastname: { $regex: new RegExp(filter, "i") } },
+      ],
+    });
+    res.json({
+      user: users.map((user) => ({
+        username: user.useranme,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        id: user._id,
+      })),
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      meg: "Internal Error",
+    });
+  }
 });
 
 module.exports = {

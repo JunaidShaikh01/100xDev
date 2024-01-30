@@ -1,6 +1,7 @@
 const express = require("express");
 const middleware = require("../middleware/middleware");
 const { Account } = require("../db/db");
+const { default: mongoose } = require("mongoose");
 const accountRouter = express.Router();
 
 accountRouter.get("/balance", middleware, async (req, res) => {
@@ -19,12 +20,16 @@ accountRouter.get("/balance", middleware, async (req, res) => {
 });
 
 accountRouter.post("/transfer", middleware, async (req, res) => {
+  const session = await mongoose.startSession();
+
+  session.startTransaction();
   const { to, amount } = req.body;
 
   const account = await Account.findOne({
     userId: req.userId,
   });
   if (!account || account.balance < amount) {
+    session.abortTransaction();
     return res.status(404).json({
       msg: "Account not found or low balance",
     });
@@ -33,6 +38,7 @@ accountRouter.post("/transfer", middleware, async (req, res) => {
     userId: to,
   });
   if (!toAcount) {
+    session.abortTransaction();
     return res.status(404).json({
       msg: "To user account not found",
     });
@@ -47,7 +53,7 @@ accountRouter.post("/transfer", middleware, async (req, res) => {
         balance: -amount,
       },
     }
-  );
+  ).session(session);
 
   await Account.updateOne(
     {
@@ -58,7 +64,9 @@ accountRouter.post("/transfer", middleware, async (req, res) => {
         balance: amount,
       },
     }
-  );
+  ).session(session);
+
+  await session.commitTransaction();
   res.status(500).json({
     msg: "Transfer succesfully",
   });
