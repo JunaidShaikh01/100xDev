@@ -104,6 +104,10 @@ userRouter.post("/signin", async (req, res) => {
   });
 });
 
+// userRouter.post('/logout' , async(req , res)=>{
+//   const 
+// })
+
 //get all users
 
 //get all users

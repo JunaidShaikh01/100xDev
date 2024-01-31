@@ -9,6 +9,7 @@
 .usersDetails {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .usersDetails p {
   margin-left: 0.5em;

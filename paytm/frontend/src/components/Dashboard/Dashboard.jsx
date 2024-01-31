@@ -22,6 +22,7 @@ export default function Dashboard({ balance, username, users }) {
         }
       });
   }, [filter, debouncedFilter, users]);
+
   return (
     <div>
       <Header username={username} />
