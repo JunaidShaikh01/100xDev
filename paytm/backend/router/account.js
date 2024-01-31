@@ -67,7 +67,7 @@ accountRouter.post("/transfer", middleware, async (req, res) => {
   ).session(session);
 
   await session.commitTransaction();
-  res.status(500).json({
+  res.json({
     msg: "Transfer succesfully",
   });
 });
