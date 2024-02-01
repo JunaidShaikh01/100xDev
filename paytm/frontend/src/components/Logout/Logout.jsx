@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import LogoutPage from "../../pages/LogoutPage";
-
+import { useNavigate } from "react-router-dom";
+import styles from "./Logout.module.css";
 export default function Logout({ onClose }) {
-  const [logoutButtonClicked, setLogoutButtonClicked] = useState(0);
-  const token = localStorage.getItem("token");
-  console.log("Token", token);
+  const navigate = useNavigate();
   function logoutFunc() {
-    setLogoutButtonClicked(logoutButtonClicked + 1);
+    localStorage.clear();
+    navigate("/");
   }
-  console.log("logout fnction invoked", logoutButtonClicked);
+
   return (
-    <div>
-      <button onClick={onClose}>Close </button>
-      <button onClick={logoutFunc}> Logout</button>
-      {logoutButtonClicked > 0 && (
-        <LogoutPage logout={logoutButtonClicked} token={token} />
-      )}
+    <div className={styles.logoutMain}>
+      <div className={styles.logoutText}>
+        <h2>Do You Want to logout ?</h2>
+      </div>
+      <div className={styles.logoutButtons}>
+        <button onClick={onClose}>Close </button>
+        <button onClick={logoutFunc}> Logout</button>
+      </div>
     </div>
   );
 }

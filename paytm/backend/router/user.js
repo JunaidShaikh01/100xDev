@@ -74,6 +74,7 @@ userRouter.post("/signup", async (req, res) => {
 
 userRouter.post("/signin", async (req, res) => {
   const sucess = signinSchema.safeParse(req.body);
+  console.log("Success", sucess);
 
   if (!sucess) {
     return res.json({
@@ -105,7 +106,7 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // userRouter.post('/logout' , async(req , res)=>{
-//   const 
+//   const
 // })
 
 //get all users

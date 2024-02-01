@@ -6,9 +6,9 @@ export default function Signin() {
     username: "",
     password: "",
   });
-
-  const actionData = useActionData();
-  console.log("Action Data", actionData);
+  console.log("formData", formData);
+  // const actionData = useActionData();
+  // console.log("Action Data", actionData);
   const changeHandler = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
