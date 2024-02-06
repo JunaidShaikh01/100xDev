@@ -7,6 +7,10 @@ export default function Logout({ onClose }) {
     navigate("/");
   }
 
+  function updateFunc() {
+    console.log("update button clicked");
+    navigate("/update");
+  }
   return (
     <div className={styles.logoutMain}>
       <div className={styles.logoutText}>
@@ -15,6 +19,7 @@ export default function Logout({ onClose }) {
       <div className={styles.logoutButtons}>
         <button onClick={onClose}>Close </button>
         <button onClick={logoutFunc}> Logout</button>
+        <button onClick={updateFunc}>Update</button>
       </div>
     </div>
   );

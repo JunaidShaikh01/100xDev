@@ -8,12 +8,14 @@ import DashboardPage, {
   loader as dashboardLoader,
 } from "./pages/DashboardPage";
 import TransferPage, { action as transferAction } from "./pages/TransferPage";
+import UpdatePage, { action as updateAction } from "./pages/UpdatePage";
 
 const router = createBrowserRouter([
   { path: "/", element: <SigninPage />, action: signinAction },
   { path: "/signup", element: <SignupPage />, action: signupAction },
   { path: "/dashboard", element: <DashboardPage />, loader: dashboardLoader },
   { path: "/transfer", element: <TransferPage />, action: transferAction },
+  { path: "/update", element: <UpdatePage />, action: updateAction },
 ]);
 
 export default function App() {

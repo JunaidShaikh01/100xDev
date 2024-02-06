@@ -150,7 +150,7 @@ userRouter.get("/all_users", middleware, async (req, res) => {
 //   });
 // });
 
-userRouter.put("/", middleware, async (req, res) => {
+userRouter.put("/update", middleware, async (req, res) => {
   const sucess = putSchema.safeParse(req.body);
 
   if (!sucess) {
@@ -160,7 +160,7 @@ userRouter.put("/", middleware, async (req, res) => {
   }
 
   // const userId =
-  const user = await User.updateOne(
+  await User.updateOne(
     {
       _id: req.userId,
     },
