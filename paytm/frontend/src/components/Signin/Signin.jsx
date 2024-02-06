@@ -45,7 +45,7 @@ export default function Signin() {
               value={formData.password}
               placeholder="Enter your name"
             />
-            <button className={styles.submitBtn}>Sign Up</button>
+            <button className={styles.submitBtn}>Sign In</button>
           </Form>
 
           <p className={styles.signinFooter}>

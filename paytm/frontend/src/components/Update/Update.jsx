@@ -1,7 +1,38 @@
 import React, { useCallback, useState } from "react";
 import styles from "./Update.module.css";
-import { Form } from "react-router-dom";
+import { Form, useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+
 export default function Update() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  async function deleteFunc() {
+    const confermation = confirm("Do you want to delete your account?");
+    if (confermation) {
+      const username = searchParams.get("username");
+      console.log("Username :-", username);
+      const token = localStorage.getItem("token");
+      try {
+        const { data } = await axios.delete(
+          "http://localhost:3000/api/v1/user/delete",
+          {
+            data: { username },
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(data);
+        localStorage.clear();
+        return navigate("/");
+      } catch (error) {
+        console.log(error);
+        alert("Invalid username");
+      }
+    }
+  }
+
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -15,7 +46,7 @@ export default function Update() {
     }));
   }, []);
   //   const userdata = User;
-  console.log("formData", formData);
+  // console.log("formData", formData);
   //   console.log(userdata);q
   return (
     <div className={styles.main}>
@@ -54,7 +85,10 @@ export default function Update() {
             onChange={handleChange}
             value={formData.password}
           />
-          <button className={styles.submitBtn}>Update</button>
+          <div className={styles.deleteBtn}>
+            <button className={styles.submitBtn}>Update</button>
+            <button onClick={deleteFunc}> Delete</button>
+          </div>
         </Form>
       </div>
     </div>

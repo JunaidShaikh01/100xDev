@@ -53,12 +53,6 @@ userRouter.post("/signup", async (req, res) => {
     lastname: req.body.lastname,
   });
 
-  // const userId = user._id;
-  // const account = await Account.create({
-  //   userId: userId,
-  //   balance: Math.floor(Math.random * 10000) + 1,
-  // });
-
   const userId = user._id;
 
   await Account.create({
@@ -105,13 +99,6 @@ userRouter.post("/signin", async (req, res) => {
   });
 });
 
-// userRouter.post('/logout' , async(req , res)=>{
-//   const
-// })
-
-//get all users
-
-//get all users
 userRouter.get("/all_users", middleware, async (req, res) => {
   const loggedInUser = await User.findById(req.userId);
   const { balance } = await Account.findOne({
@@ -132,45 +119,53 @@ userRouter.get("/all_users", middleware, async (req, res) => {
   });
 });
 
-// userRouter.get("/all_users", middleware, async (req, res) => {
-//   const loggedInUser = await User.findOne(req.userId);
-//   const balance = await Account.findOne({
-//     userId: req.userId,
-//   });
-//   const allUsers = await User.find();
-
-//   const allOtherUsers = allUsers.filter(
-//     (user) => user._id.toString() !== loggedInUser._id.toString()
-//   );
-
-//   res.json({
-//     user: loggedInUser,
-//     balance: balance,
-//     users: allOtherUsers,
-//   });
-// });
-
 userRouter.put("/update", middleware, async (req, res) => {
   const sucess = putSchema.safeParse(req.body);
 
+  console.log("Request", req.body);
   if (!sucess) {
     return res.json({
       msg: "Invalid input",
     });
   }
 
-  // const userId =
   await User.updateOne(
     {
       _id: req.userId,
     },
-    {
-      $set: req.body,
-    }
+    req.body
   );
   res.status(200).json({
     msg: "Updated Successfuly",
   });
+});
+
+const deleteBody = zod.string();
+
+userRouter.delete("/delete", middleware, async (req, res) => {
+  const username = req.body.username;
+  // console.log("username: ", username);
+
+  const { success } = deleteBody.safeParse(username);
+  if (!success) {
+    res.status(400).json({
+      message: "Error while deleting account due to invalid username",
+    });
+  }
+
+  const userExists = await User.findOne({ username });
+  // console.log(userExists);
+
+  if (!userExists) {
+    res.status(404).json({
+      message: `No account found with username: ${username}`,
+    });
+  }
+
+  await User.deleteOne({ username });
+  await Account.deleteOne({ userId: userExists._id });
+
+  res.json({ message: "Account deleted successfully" });
 });
 
 userRouter.get("/bulk", async (req, res) => {

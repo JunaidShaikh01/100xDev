@@ -5,6 +5,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 const middleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
+
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(404).json({
       msg: "Invalid credentials",

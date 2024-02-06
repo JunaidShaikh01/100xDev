@@ -16,6 +16,7 @@ const router = createBrowserRouter([
   { path: "/dashboard", element: <DashboardPage />, loader: dashboardLoader },
   { path: "/transfer", element: <TransferPage />, action: transferAction },
   { path: "/update", element: <UpdatePage />, action: updateAction },
+  
 ]);
 
 export default function App() {

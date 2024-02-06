@@ -14,7 +14,7 @@ export const action = async ({ request }) => {
     lastname: data.get("lastname"),
     password: data.get("password"),
   };
-  console.log("update data", updateData);
+  // console.log("update data", updateData);
   const token = localStorage.getItem("token");
   try {
     const { data } = axios.put(
@@ -22,7 +22,7 @@ export const action = async ({ request }) => {
       updateData,
       {
         headers: {
-          Authorization: "Bearer" + token,
+          Authorization: "Bearer " + token,
         },
       }
     );
