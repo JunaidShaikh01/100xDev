@@ -68,7 +68,6 @@ userRouter.post("/signup", async (req, res) => {
 
 userRouter.post("/signin", async (req, res) => {
   const sucess = signinSchema.safeParse(req.body);
-  console.log("Success", sucess);
 
   if (!sucess) {
     return res.json({
@@ -140,6 +139,16 @@ userRouter.put("/update", middleware, async (req, res) => {
   });
 });
 
+userRouter.get("/deleteuser", middleware, async (req, res) => {
+  const username = await User.findOne({
+    _id: req.userId,
+  });
+  console.log(username);
+  res.json({
+    username,
+  });
+});
+
 const deleteBody = zod.string();
 
 userRouter.delete("/delete", middleware, async (req, res) => {
@@ -187,7 +196,7 @@ userRouter.get("/bulk", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    res.status(404).json({
       meg: "Internal Error",
     });
   }

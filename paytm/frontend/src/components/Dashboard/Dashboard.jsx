@@ -29,7 +29,9 @@ export default function Dashboard({ balance, username, users }) {
       <div className={styles.mainDashboard}>
         <div className={styles.userInfo}>
           <h2 className={styles.balance}>Your Balance ${balance}</h2>
-          <h2 className={styles.username}>{username}</h2>
+          <h2 className={styles.username}>
+            {username?.[0].toUpperCase() + username.slice(1)}
+          </h2>
         </div>
         <div className={styles.input}>
           <input
