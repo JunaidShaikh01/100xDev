@@ -17,6 +17,7 @@
   max-width: 70%;
   display: flex;
   /* background: #000; */
+  flex-direction: column;
   justify-content: space-evenly;
 }
 .logoutButtons button {
@@ -28,6 +29,7 @@
   border-radius: 8px;
   padding: 0.5em 2em 0.5em 2em;
   cursor: pointer;
+  margin: 0.5em 0 0.5em 0;
 }
 
 .logoutButtons button:hover {

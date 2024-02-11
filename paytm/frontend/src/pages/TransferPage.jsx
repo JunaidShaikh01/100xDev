@@ -1,7 +1,8 @@
 import React from "react";
-import Transfer from "../components/Transfer";
+
 import { redirect } from "react-router-dom";
 import axios from "axios";
+import Transfer from "../components/Transfer/Transfer";
 
 export default function TransferPage() {
   return <Transfer />;

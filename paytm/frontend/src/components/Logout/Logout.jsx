@@ -24,9 +24,9 @@ export default function Logout({ onClose }) {
   }
   return (
     <div className={styles.logoutMain}>
-      <div className={styles.logoutText}>
+      {/* <div className={styles.logoutText}>
         <h2>Do You Want to logout ?</h2>
-      </div>
+      </div> */}
       <div className={styles.logoutButtons}>
         <button onClick={onClose}>Close </button>
         <button onClick={logoutFunc}> Logout</button>
