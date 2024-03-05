@@ -1,5 +1,8 @@
-import { Signup } from "../components/Signup";
-
-export default function () {
-  <Signup />;
+import SignupComponent from "../components/signupComponent";
+export default function Signup() {
+  return (
+    <div>
+      <SignupComponent />
+    </div>
+  );
 }

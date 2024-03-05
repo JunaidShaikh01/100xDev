@@ -1,15 +1,22 @@
-"use client"; // Corrected typo
+"use client";
 
 import axios from "axios";
 import { ChangeEventHandler, useState } from "react";
+// import { useClient } from "@next/next/client"; // Import useClient from @next/next/client
 
-export function Signup() {
+export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
-    // Add your signup logic here, e.g., sending a request to the server
-    console.log("Signing up...");
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post("/api/signup", { username, password });
+      // Handle successful sign-up, e.g., redirect to another page
+      console.log(response.data);
+    } catch (error) {
+      // Handle sign-up error, e.g., display error message to user
+      console.error("Sign-up failed:", error);
+    }
   };
 
   return (
@@ -17,7 +24,7 @@ export function Signup() {
       <div className="flex justify-center">
         <a
           href="#"
-          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+          className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 "
         >
           <div>
             <div className="px-10">
@@ -25,24 +32,19 @@ export function Signup() {
             </div>
             <div className="pt-2">
               <LabelledInput
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                onChange={(e) => setUsername(e.target.value)}
                 label="Username"
                 placeholder="harkirat@gmail.com"
               />
               <LabelledInput
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={(e) => setPassword(e.target.value)}
                 label="Password"
-                type={"password"}
+                type="password"
                 placeholder="123456"
               />
               <button
-                type="button"
+                onClick={handleSignup}
                 className="mt-8 w-full text-white bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                onClick={handleSignup} // Added onClick handler
               >
                 Sign up
               </button>

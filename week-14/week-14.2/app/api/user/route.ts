@@ -1,6 +1,6 @@
-export function GET() {
-  return Response.json({
-    email: "junaid@gmail.com",
-    name: "Junaid",
-  });
+export function GET(){
+    return Response.json({
+        email : "junaid2gmail.com",
+        name : "Junaid"
+    })
 }
