@@ -1,23 +1,24 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 // import { useClient } from "@next/next/client"; // Import useClient from @next/next/client
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSignup = async () => {
-    try {
-      const response = await axios.post("/api/signup", { username, password });
-      // Handle successful sign-up, e.g., redirect to another page
-      console.log(response.data);
-    } catch (error) {
-      // Handle sign-up error, e.g., display error message to user
-      console.error("Sign-up failed:", error);
-    }
-  };
+  const router = useRouter();
+  //   const handleSignup = async () => {
+  //     try {
+  //       const response = await axios.post("/api/signup", { username, password });
+  //       // Handle successful sign-up, e.g., redirect to another page
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       // Handle sign-up error, e.g., display error message to user
+  //       console.error("Sign-up failed:", error);
+  //     }
+  //   };
 
   return (
     <div className="h-screen flex justify-center flex-col">
@@ -43,7 +44,27 @@ export default function Signup() {
                 placeholder="123456"
               />
               <button
-                onClick={handleSignup}
+                onClick={async () => {
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:3000/api/user",
+                      {
+                        username,
+                        password,
+                      }
+                    );
+                    // Handle successful response
+                    console.log("User signed up successfully:", response.data);
+                    // Redirect or show success message to the user
+                    router.push("/");
+                  } catch (error) {
+                    // Handle error
+                    console.error("Sign-up failed:", error);
+                    // Show error message to the user
+                  }
+                  setUsername(""); // Clear the username field
+                  setPassword(""); // Clear the password field
+                }}
                 className="mt-8 w-full text-white bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
               >
                 Sign up
