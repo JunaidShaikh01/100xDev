@@ -10,12 +10,7 @@ import {
 const Transfer = () => {
   const [searchParams] = useSearchParams();
   const actionData = useActionData();
-  // const navigation = useNavigation();
-  // const sendingMoney = navigation.state === "submitting";
-  // console.log("searchparam", searchParams);
-  // console.log("Search params .get name", searchParams.get("name"));
-  // console.log("Search params .get id", searchParams.get("id"));
-  // console.log("action data", actionData);
+  
   return (
     <div className={styles.main}>
       <div className={styles.subMain}>
@@ -31,11 +26,6 @@ const Transfer = () => {
           // action="/transfer"
           className={styles.form}
         >
-          {/* {actionData && (
-					<p className="text-red-500 font-semibold">
-						{actionData} :(
-					</p>
-				)} */}
           <label htmlFor="amount">Enter amount (in Rs.)</label>
           <input
             className="px-2 py-2 rounded-md shadow-lg w-full"

@@ -20,10 +20,39 @@ const accountSchema = mongoose.Schema({
   balance: Number,
 });
 
+const transectionSchema = mongoose.Schema({
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+
+  receiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+
+  amount: {
+    type: Number,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ["debit", "credit"],
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const User = mongoose.model("Users", UserSchema);
 const Account = mongoose.model("Account", accountSchema);
-
+const Transections = mongoose.model("Transections", transectionSchema);
 module.exports = {
   User,
   Account,
+  Transections,
 };

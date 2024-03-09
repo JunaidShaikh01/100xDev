@@ -17,12 +17,7 @@ export const action = async ({ request }) => {
 
   const token = localStorage.getItem("token");
 
-  console.log("amount: ", amount);
-  console.log("id: ", id);
-  console.log("token:", token);
-
   try {
-    console.log("Runnig 1");
     const response = await axios.post(
       "http://localhost:3000/api/v1/account/transfer",
 
@@ -34,11 +29,8 @@ export const action = async ({ request }) => {
       }
     );
 
-    console.log(response);
-    // console.log(data.message);
     return redirect("/dashboard");
   } catch (error) {
-    //     // console.log(error.response.data.message);
     return error;
   }
 };
