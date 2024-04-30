@@ -25,7 +25,7 @@ export default function Bar() {
         </button>
         {networkCount.messaging >= 1 ? (
           <div className="redIcon">
-            {networkCount.messaging >= 100 ? "99+" : networkCount.messaging}
+            {networkCount.messaging >= 100 ? "99+": networkCount.messaging}
           </div>
         ) : (
           ""
@@ -43,7 +43,7 @@ export default function Bar() {
             {networkCount.network >= 100 ? "99+" : networkCount.network}
           </div>
         ) : (
-          " "
+          ""
         )}
       </div>
       <div className="py-1 px-2 h-20 w-20 mainBtnDiv">
@@ -75,7 +75,7 @@ export default function Bar() {
               : networkCount.notifications}
           </div>
         ) : (
-          " "
+          ""
         )}
       </div>
       <div className="py-1 pl-2 h-20 w-20 mainBtnDiv">
