@@ -7,6 +7,10 @@ export default function Signup() {
     firstname: "",
     lastname: "",
     username: "",
+
+
+
+    
     password: "",
   });
 

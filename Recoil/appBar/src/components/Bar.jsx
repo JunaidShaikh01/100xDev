@@ -43,7 +43,7 @@ export default function Bar() {
             {networkCount.network >= 100 ? "99+" : networkCount.network}
           </div>
         ) : (
-          " "
+          ""
         )}
       </div>
       <div className="py-1 px-2 h-20 w-20 mainBtnDiv">
@@ -75,7 +75,7 @@ export default function Bar() {
               : networkCount.notifications}
           </div>
         ) : (
-          " "
+          ""
         )}
       </div>
       <div className="py-1 pl-2 h-20 w-20 mainBtnDiv">

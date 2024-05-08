@@ -4,7 +4,8 @@ const { User, Account } = require("../db/db");
 const jwt = require("jsonwebtoken");
 const zod = require("zod");
 const middleware = require("../middleware/middleware");
-app = express();
+const app = express();
+const bcrypt = require("bcrypt");
 
 require("dotenv").config();
 
@@ -29,6 +30,8 @@ const putSchema = zod.object({
 });
 
 userRouter.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
   const sucess = signupSchema.safeParse(req.body);
   if (!sucess) {
     return res.json({
@@ -37,7 +40,7 @@ userRouter.post("/signup", async (req, res) => {
   }
 
   const existingUser = await User.findOne({
-    username: req.body.username,
+    username: username,
   });
 
   if (existingUser) {
@@ -48,13 +51,13 @@ userRouter.post("/signup", async (req, res) => {
 
   const user = await User.create({
     username: req.body.username,
-    password: req.body.password,
+    password: hashedPassword,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
   });
 
   const userId = user._id;
-
+  const token = jwt.sign({ userId }, jwtSecret);
   await Account.create({
     userId: userId,
 
@@ -63,39 +66,49 @@ userRouter.post("/signup", async (req, res) => {
   res.status(201).json({
     msg: "User Addede successfully",
     user,
+    token,
   });
 });
 
 userRouter.post("/signin", async (req, res) => {
-  const sucess = signinSchema.safeParse(req.body);
+  try {
+    const { username, password } = req.body;
+    const sucess = signinSchema.safeParse(req.body);
+    if (!sucess) {
+      return res.json({
+        msg: "Invalid input",
+      });
+    }
 
-  if (!sucess) {
-    return res.json({
-      msg: "Invalid input",
-    });
-  }
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        msg: "Invalid Username",
+      });
+    }
 
-  const user = await User.findOne({
-    useranme: req.body.useranme,
-    password: req.body.password,
-  });
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-  if (user) {
-    const token = jwt.sign(
-      {
-        userId: user._id,
-      },
-      jwtSecret
-    );
+    if (!passwordMatch) {
+      return res.status(404).json({
+        msg: "Invalid password",
+      });
+    }
+    // const user = await User.findOne({
+    //   useranme: req.body.useranme,
+    //   password: req.body.password,
+    // });
+    const token = jwt.sign({ userId: user._id }, jwtSecret);
+
     res.json({
       msg: "Signin successfully",
       token,
     });
-    return;
+  } catch (error) {
+    res.status(404).json({
+      msg: "Sign in failed",
+    });
   }
-  res.status(404).json({
-    msg: "Sign in failed",
-  });
 });
 
 userRouter.get("/all_users", middleware, async (req, res) => {
