@@ -25,7 +25,7 @@ export default function Bar() {
         </button>
         {networkCount.messaging >= 1 ? (
           <div className="redIcon">
-            {networkCount.messaging >= 100 ? "99+" : networkCount.messaging}
+            {networkCount.messaging >= 100 ? "99+": networkCount.messaging}
           </div>
         ) : (
           ""
