@@ -30,9 +30,9 @@ app.post("/register", async (req, res) => {
     req.body;
   const userRegistered = await prisma.user.create({
     data: {
-      name: name, // This should be a string value
+      name: name,
       department: department,
-      dateOfJoining: new Date(dateOfJoining), // Ensure this is a valid date
+      dateOfJoining: new Date(dateOfJoining), 
       Hobbies: Hobbies,
       adress: adress,
       genders: genders,

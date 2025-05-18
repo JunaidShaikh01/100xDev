@@ -41,8 +41,8 @@ export default function Form() {
       await axios.post("http://localhost:3000/register", {
         name: name,
         department: department,
-        dateOfJoining: dateOfJoining, // Ensure the date format is correct
-        Hobbies: concatHobbies, // Ensure hobbies are concatenated correctly
+        dateOfJoining: dateOfJoining, 
+        Hobbies: concatHobbies, 
         genders: gender,
         adress: address,
       });
